@@ -2,12 +2,6 @@
 
 > 网易云点歌 → 下载 MP3 → 转 SILK 语音条 → 通过 NapCat 发送 QQ 语音条
 
-## 当前状态
-
-- **扫码登录**：已废弃（服务器 IP 112.22.138.152 被网易云风控 `8821` 拒绝）
-- **Cookie 方案**：当前可行解（管理员 `/设置cookie <Cookie>`）
-- **Playwright 临时方案**：服务器真实 Chromium 浏览器可绕过 `8821` 风控（已测试成功）
-
 ## 功能
 
 - `/搜歌 <关键词>` — 搜索歌曲并缓存结果
@@ -33,8 +27,6 @@ pip install requests pysilk
 | cache_timeout | 搜索缓存时间（秒） | `300` |
 | quality | 音质等级（low/medium/standard/high/extreme） | `standard` |
 
-> ⚠️ 配置文件含 Cookie，不应提交到公共仓库。已加入 `.gitignore`。
-
 ## Cookie 获取方法
 
 1. 电脑浏览器登录 `music.163.com`
@@ -49,8 +41,3 @@ pip install requests pysilk
 - `v1.2.0` — 删除扫码/轮询/登录状态代码；新增 `/设置cookie`；支持 Cookie 取歌；同步配置文件
 - `v1.1.x` — 旧扫码方案（已废弃，受 `8821` 风控拦截）
 
-## 仓库
-
-本地已初始化 `git` 仓库（`git init` 完成，`.gitignore` 已配置排除配置文件）。
-实际推送到 GitHub 需要仓库 URL + 认证（如 `git push https://token@github.com/user/repo.git`），
-当前无真实远程地址，无法自动完成推送。
