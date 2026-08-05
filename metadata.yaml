@@ -1,0 +1,7 @@
+name: astrbot_plugin_music_voice
+desc: 网易云点歌，下载音乐转为语音条发送
+help: 搜索歌曲并发送语音条
+version: v1.2.0
+author: totem
+repo: ""
+astrbot_version: ">=4.0.0"

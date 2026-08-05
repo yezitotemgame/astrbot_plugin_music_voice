@@ -1,0 +1,41 @@
+{
+  "cookie": {
+    "description": "网易云音乐Cookie（/设置cookie命令保存）",
+    "type": "text",
+    "default": "",
+    "hint": "群内管理员发送 /设置cookie <Cookie> 保存，解锁VIP歌曲",
+    "obvious_hint": true
+  },
+  "search_limit": {
+    "description": "搜索结果数量",
+    "type": "int",
+    "default": 10,
+    "hint": "每次搜索返回的歌曲数量"
+  },
+  "cache_timeout": {
+    "description": "搜索缓存时间（秒）",
+    "type": "int",
+    "default": 300,
+    "hint": "超时后需重新搜索"
+  },
+  "quality": {
+    "description": "音质等级",
+    "type": "string",
+    "options": [
+      "low",
+      "medium",
+      "standard",
+      "high",
+      "extreme"
+    ],
+    "labels": [
+      "1-低品质",
+      "2-中等品质",
+      "3-标准品质(默认)",
+      "4-高品质",
+      "5-极致品质"
+    ],
+    "default": "standard",
+    "hint": "从低到高5个等级，等级越高音质越好但文件越大"
+  }
+}
