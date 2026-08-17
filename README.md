@@ -1,53 +1,44 @@
-# 音乐语音条插件
+# 网易云音乐语音条插件 (astrbot_plugin_music_voice) v2.1.0
 
-> 网易云点歌，下载音频转 SILK 语音，通过 NapCat 发送 QQ 语音条。
+> 网易云点歌 → 下载 MP3 → 转 SILK 语音条 → 通过 NapCat 发送 QQ 语音条
+> VIP 歌曲自动二维码登录解锁，无需手动设置 Cookie
 
 ## 功能
 
-- `/搜歌 <关键词>` — 搜索网易云音乐歌曲，返回列表
-- `/点歌 <序号>` — 下载歌曲，转 SILK 语音条发送
-- `/点歌帮助` — 显示帮助
+- `/搜歌 <关键词>` — 搜索歌曲并缓存结果
+- `/点歌 <序号/歌名>` — 从缓存选歌或直接搜索第一首，发送语音条
+- VIP 歌曲自动触发二维码登录：截图发群 → 用户用网易云APP扫码 → 自动获取Cookie → 继续播放
 
-## 示例
+## VIP 歌曲解锁流程
 
+1. 用户点播 VIP 歌曲 → 获取不到播放链接
+2. 插件自动用 Playwright（无头浏览器）打开网易云登录页面
+3. 截取二维码图片发送到群里
+4. 用户用网易云音乐 APP 扫码登录
+5. 插件自动检测登录成功 → 提取 Cookie 并保存到配置
+6. 自动关闭临时浏览器 → 重新获取播放链接 → 继续播放
+7. Cookie 保存后后续点歌自动使用，失效时会再次弹二维码
+
+## 安装依赖
+
+```bash
+pip install requests pysilk playwright
+python -m playwright install chromium
 ```
-/搜歌 晴天
-/点歌 1
-```
 
-## 依赖
-
-- **ffmpeg** — 需在 PATH 中，用于音频转码
-- **pysilk** — SILK 编码（已内置）
-- **requests** — HTTP 请求
-- 无需外部 API 服务，直连网易云官方接口
-
-## 原理
-
-1. 调用网易云搜索 API 搜索歌曲
-2. 调用网易云接口获取播放链接
-3. 下载 MP3 音频
-4. ffmpeg 转 PCM
-5. pysilk 编码为 SILK 格式
-6. 通过 NapCat OneBot 接口发送 QQ 语音条
+系统要求：`ffmpeg` 在 PATH 中。
 
 ## 配置
 
 | 配置项 | 说明 | 默认值 |
 |--------|------|--------|
-| cookie | 网易云音乐 Cookie，填了可点 VIP 歌曲 | 空 |
-| search_limit | 搜索结果数量 | 10 |
-| cache_timeout | 搜索缓存时间（秒） | 300 |
-| quality | 音质等级（见下表） | standard |
+| cookie | 网易云 Cookie（自动扫码获取，也可手动填） | `""` |
+| search_limit | 搜索结果数量 | `10` |
+| cache_timeout | 搜索缓存时间（秒） | `300` |
+| quality | 音质等级（low/medium/standard/high/extreme） | `standard` |
 
-### 音质等级
+## 版本历史
 
-| 配置值 | 等级 | 采样率 | Bitrate | 说明 |
-|--------|------|--------|---------|------|
-| low | 1档 | 16000Hz | 16kbps | 最低，文件最小 |
-| medium | 2档 | 24000Hz | 24kbps | 省流量 |
-| standard | 3档 | 24000Hz | 50kbps | 默认标准 |
-| high | 4档 | 24000Hz | 80kbps | 高品质 |
-| extreme | 5档 | 24000Hz | 100kbps | 极致，文件最大 |
-
-Cookie 在 WebUI 插件配置中设置，不会在群聊中暴露。
+- `v2.1.0` — 去掉 `/设置cookie` 命令；VIP 歌曲自动 Playwright 二维码登录截图发群，扫码后自动获取 Cookie 继续播放
+- `v1.2.0` — 手动 `/设置cookie` 方案
+- `v1.1.x` — 旧扫码方案（已废弃）
